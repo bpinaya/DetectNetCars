@@ -1,0 +1,24 @@
+{
+    "caffe flavor": "NVIDIA",
+    "caffe version": "0.15.14",
+    "creation time": "2017-02-16 21:53:04.933095",
+    "dataset_id": "20170215-190921-2312",
+    "deploy file": "deploy.prototxt",
+    "digits version": "5.1-dev",
+    "framework": "caffe",
+    "id": "20170216-215304-8a4b",
+    "image dimensions": [
+        384,
+        1248,
+        3
+    ],
+    "job id": "20170216-215304-8a4b",
+    "mean file": "mean.binaryproto",
+    "model file": "original.prototxt",
+    "name": "DetectorCarPolyDecayRe",
+    "snapshot file": "snapshot_iter_19778.caffemodel",
+    "solver file": "solver.prototxt",
+    "status": "Done",
+    "train_val file": "train_val.prototxt",
+    "username": "bpinaya"
+}
