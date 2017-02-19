@@ -1,8 +1,8 @@
-##Udacity P4 Line Detection
+##Udacity P5 Car Detection Using DIGITS and Caffe
 
 ---
 
-**Advanced Lane Finding Project**
+**DriveNet with DIGITS and Caffe, to solve the last assigment of Udacity's Self Driving Car Nanodegree
 
 The goals / steps of this project according the rubric are the following:
 
@@ -22,10 +22,10 @@ So the goals I set myself for this challenge are the following:
 
 [//]: # (Image References)
 
-[detectnet1loss]: ./readme_imgs/detectnet1loss.png "Detectnet loss"
-[detectnet1lr]: ./readme_imgs/detectnet1lr.png "Detectnet Learning rate"
-[detectnet2loss]: ./readme_imgs/detectnet2loss.png "Region of Interest"
-[detectnet2lr]: ./readme_imgs/detectnet2lr.png "Binary Example"
+[detectnet1loss]: ./readme_imgs/detect1loss.png "Detectnet loss"
+[detectnet1lr]: ./readme_imgs/detect1lr.png "Detectnet Learning rate"
+[detectnet2loss]: ./readme_imgs/detect2loss.png "Region of Interest"
+[detectnet2lr]: ./readme_imgs/detect2lr.png "Binary Example"
 [detectnet]: ./readme_imgs/detectnet.png "DetectNet Architecture"
 [coverage]: ./readme_imgs/coverage.png "coverage"
 [inference]: ./readme_imgs/inference.png "inference"
@@ -102,6 +102,8 @@ Because it's Caffe, the following files are needed in order to generate the vide
 * `.caffemodel` A Caffemodel file
 * `deploy.prototxt` A Caffemodel file
 * The input video
+
+
 And must be called this way:
 
 ```
@@ -195,7 +197,7 @@ python CarDetection.py snapshot_iter_19778.caffemodel deploy.prototxt project_vi
 Videos of the both detections can be seen here:
 
 * This one for the first video:
-[![IMAGE ALT TEXT HERE](http://img.youtube.com/vi/https://youtu.be/9a_cF1vNVSw/0.jpg)](http://www.youtube.com/watch?v=https://youtu.be/9a_cF1vNVSw)
+[![IMAGE ALT TEXT HERE](http://img.youtube.com/vi/9a_cF1vNVSw/0.jpg)](http://www.youtube.com/watch?v=9a_cF1vNVSw)
 
 There is some struggle with the white color, but in the future this is expected to be resolved.
 
