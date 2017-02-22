@@ -4,7 +4,6 @@
 import glob
 import cv2
 import numpy as np
-from scipy.signal import find_peaks_cwt
 from moviepy.editor import VideoFileClip
 import pickle
 
