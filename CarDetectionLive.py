@@ -1,22 +1,19 @@
-# This might be run only once
-#import imageio
-#imageio.plugins.ffmpeg.download()
-import glob
+# Based on
+# https://gist.github.com/lukeyeager/777087991419d98700054cade2f755e6
+#--------------------------------------------------------------------
+# CarDetectionLive one runs DetectNet on Live USB Camera (TX1 Tested)
+
 import cv2
 import numpy as np
-from moviepy.editor import VideoFileClip
-import pickle
-
 import argparse
 import os
 import time
 
 from google.protobuf import text_format
-import numpy as np
-import PIL.Image
-import scipy.misc
 
+import scipy.misc
 os.environ['GLOG_minloglevel'] = '2' # Suppress most caffe output
+
 import caffe
 from caffe.proto import caffe_pb2
 
@@ -156,28 +153,8 @@ def forward_pass(image, net, transformer, batch_size=None):
 
     return scores
 
-def read_labels(labels_file):
-    """
-    Returns a list of strings
-
-    Arguments:
-    labels_file -- path to a .txt file
-    """
-    if not labels_file:
-        print 'WARNING: No labels file provided. Results will be difficult to interpret.'
-        return None
-
-    labels = []
-    with open(labels_file) as infile:
-        for line in infile:
-            label = line.strip()
-            if label:
-                labels.append(label)
-    assert len(labels), 'No labels found'
-    return labels
-
 def classify(caffemodel, deploy_file, image,
-        mean_file=None, labels_file=None, batch_size=None, use_gpu=True):
+        mean_file=None, batch_size=None, use_gpu=True):
     """
     Classify some images against a Caffe model and print the results
 
@@ -188,7 +165,6 @@ def classify(caffemodel, deploy_file, image,
 
     Keyword arguments:
     mean_file -- path to a .binaryproto
-    labels_file path to a .txt file
     use_gpu -- if True, run inference on the GPU
     """
     # Load the model
@@ -203,8 +179,6 @@ def classify(caffemodel, deploy_file, image,
         raise ValueError('Invalid number for channels: %s' % channels)
 
     image = resize_img(image,height,width)
-
-    labels = read_labels(labels_file)
 
     # Classify the image
     scores = forward_pass(image, net, transformer, batch_size=batch_size)
@@ -221,6 +195,12 @@ def classify(caffemodel, deploy_file, image,
     return img_result
 
 def detect_car(image):
+    """
+    Runs our pipeline given a single image and returns another one with the bounding boxes drawn
+
+    Arguments:
+    image -- cv2 image file
+    """
     result = classify(args['caffemodel'], args['deploy_file'], image,
             args['mean'], args['labels'], args['batch_size'], not args['nogpu'])
     return result
@@ -228,22 +208,19 @@ def detect_car(image):
 if __name__ == '__main__':
     global args
     script_start_time = time.time()
-    cap = cv2.VideoCapture(0)
+    capture = cv2.VideoCapture(0)
 
-    parser = argparse.ArgumentParser(description='Classification example - DIGITS')
+    parser = argparse.ArgumentParser(description='DetectNet Live - DIGITS')
 
     ### Positional arguments
 
     parser.add_argument('caffemodel',   help='Path to a .caffemodel')
     parser.add_argument('deploy_file',  help='Path to the deploy file')
-    #parser.add_argument('video_file',   help='Path to a video')
 
     ### Optional arguments
 
     parser.add_argument('-m', '--mean',
             help='Path to a mean file (*.npy)')
-    parser.add_argument('-l', '--labels',
-            help='Path to a labels file')
     parser.add_argument('--batch-size',
                         type=int)
     parser.add_argument('--nogpu',
@@ -251,22 +228,12 @@ if __name__ == '__main__':
             help="Don't use the GPU")
  
     args = vars(parser.parse_args())
-    #img = cv2.imread('test_images/test1.jpg')
-    #720, 1280
-    #detect_car(img);
-    while(True):
-        ret, frame = cap.read()
 
-        # Display the resulting frame
+    while(True):
+        ret, frame = capture.read()
         result = detect_car(frame)
         cv2.imshow('frame',result)
-        
         if cv2.waitKey(1) & 0xFF == ord('q'):
             break
-    #project_output = 'project_video_challenge.mp4'
-    #clip1 = VideoFileClip(args['video_file']);
-    #white_clip = clip1.fl_image(detect_car)
-    #white_clip.write_videofile(project_output, audio=False);
     cap.release()
     cv2.destroyAllWindows()
-    #print 'Video took %f seconds.' % (time.time() - script_start_time,)
