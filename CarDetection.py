@@ -207,7 +207,7 @@ def detect_car(image):
     image -- cv2 image file
     """
     result = classify(args['caffemodel'], args['deploy_file'], image,
-            args['mean'], args['labels'], args['batch_size'], not args['nogpu'])
+            args['mean'], args['batch_size'], not args['nogpu'])
     return result
 
 if __name__ == '__main__':
