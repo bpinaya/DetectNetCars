@@ -1,4 +1,4 @@
-##Udacity P5 Car Detection Using DIGITS and Caffe
+## Udacity P5 Car Detection Using DIGITS and Caffe
 
 ---
 
@@ -35,9 +35,9 @@ So the goals I set myself for this challenge are the following:
 [video1]: ./project_video_output.mp4 "Output Video"
 
 ---
-###Framework Selection - Using DIGITS with Caffe
+### Framework Selection - Using DIGITS with Caffe
 
-####1. DIGITS.
+#### 1. DIGITS.
 
 Digits is a framework by Nvidia, to facilitate training of deep neural networks. Currently it works only with Caffe and Torch. Its main advantage is the facility of training multiple models, loading new models and visualize results without a lot of effort, so that you can test a network to see if it would work in 10 minutes, and then improve on top of that. A glimpse into Digits can be seen on the next figure:
 
@@ -45,11 +45,11 @@ Digits is a framework by Nvidia, to facilitate training of deep neural networks.
 
 Its interface is simple but powerful, it allows dataset selection, model selection and also a pre-trained model store, to use past models in other assignments. It usses Caffe, and the results can be expanded with [TensorRT](https://developer.nvidia.com/tensorrt) to deploy your models easily.
 
-####2. KITTI Database. 
+#### 2. KITTI Database. 
 
 The database used from the assignment is taken from [KITTI](http://www.cvlibs.net/datasets/kitti/), having 12GB of data seemed useful for our purposes, also in the future, both Udacity's dataset and Kitti's will be merged to get even better results. The network used to test the Udacity video has never seen any of that data, and therefore it's interesting to see the results.
 
-####3. DetectNet as a mean to detect cars in a highway.
+#### 3. DetectNet as a mean to detect cars in a highway.
 
 [DetectNet](https://arxiv.org/pdf/1312.6082.pdf) is a derivation from GoogleNet used in its inception to detect numbers in an image, but it's not a simple number classifier network, it takes as input a whole image, and tries to detect all the Street numbers on it. Because it doesn't behave like other past approaches and because it doesn't generate proposals (sections in the image to be classified if car or not) it doesn't need a Sliding window to generate possible frames where cars could be, and it's really robust to scaling and occlusion.
 
@@ -75,7 +75,7 @@ The learning rate for this one was also a polynomial decay, but with different p
 
 ![alt text][detectnet2lr]
 
-####4. Results and utilization.
+#### 4. Results and utilization.
 
 After the training was done (which due to the images length took a lot of time) the results were great, for a test image:
 
@@ -95,7 +95,7 @@ Having the last step of the past inference generated a heatmap like layer that i
 
 These results were satisfactory, since the network had never seen that video before, making it generalized for multiple uses.
 
-####5. Video generation.
+#### 5. Video generation.
 
 Because it's Caffe, the following files are needed in order to generate the video:
 
@@ -206,8 +206,8 @@ There is some struggle with the white color, but in the future this is expected 
 [![IMAGE ALT TEXT HERE](http://img.youtube.com/vi/ucfXWugvUc0/0.jpg)](http://www.youtube.com/watch?v=ucfXWugvUc0)
 ---
 
-###Discussion
+### Discussion
 This project was exciting, specially because I drove me to use something different, so that I can get better results and faster times. The idea of using a complex network, but having it evaluate each image in 0.03 secs average is amazing. I am looking forward to improve this ever further with the help of TensorRT, and also augment the dataset and play with a segmentation network to see how it performs, and if there is improvements for both time and accuracy.
 
-###Acknowledgments
+### Acknowledgments
 To the Udacity Slack Channel, for all the help and ideas. Also to NVIDIA, who provided me with the TX1 to use in the future deployment of this network.
